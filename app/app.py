@@ -9,6 +9,8 @@ from db import db
 
 # Create flask app
 app = Flask(__name__)
+# SQLALCHEMY database will live at the root folder of the project
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'  # Can be PostgreSQL
 # Stop FlaskSQLAlchemy from tracking changes so we can use the base SQLAlchemy tracker instead
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # This should be secret, not hard coded. Using name for learning purposes

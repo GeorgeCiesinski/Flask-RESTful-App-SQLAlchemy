@@ -13,51 +13,19 @@ class UserModel(db.Model):
 	username = db.Column(db.String(80))  # Limits the characters in the string to 80
 	password = db.Column(db.String(80))
 
-	def __init__(self, _id, username, password):
-		self.id = _id
+	def __init__(self, username, password):
 		self.username = username
 		self.password = password
 
+	def save_to_db(self):
+		db.session.add(self)
+		db.session.commit()
+
 	@classmethod
 	def find_by_username(cls, username):
-		connection = sqlite3.connect('data.db')
-		cursor = connection.cursor()
-
-		query = "SELECT * FROM users WHERE username=?"
-		# To execute queries, execute requires a tuple. Single item tuple must have comma.
-		result = cursor.execute(query, (username,))
-
-		# Get first row out of result set
-		row = result.fetchone()
-		if row:
-			# Pass row[0], row[1], row [2]. * extracts ordered fields.
-			user = cls(*row)
-		else:
-			user = None
-
-		# Close connection once done
-		connection.close()
-
-		return user
+		# SQLAlchemy gets the row and converts it into the model object
+		return cls.query.filter_by(username=username).first()  # same as SELECT * FROM items WHERE username=username
 
 	@classmethod
 	def find_by_id(cls, _id):
-		connection = sqlite3.connect('data.db')
-		cursor = connection.cursor()
-
-		query = "SELECT * FROM users WHERE id=?"
-		# To execute queries, execute requires a tuple. Single item tuple must have comma.
-		result = cursor.execute(query, (_id,))
-
-		# Get first row out of result set
-		row = result.fetchone()
-		if row:
-			# Pass row[0], row[1], row [2]. * extracts ordered fields.
-			user = cls(*row)
-		else:
-			user = None
-
-		# Close connection once done
-		connection.close()
-
-		return user
+		return cls.query.filter_by(id=_id).first()  # same as SELECT * FROM items WHERE id=_id
