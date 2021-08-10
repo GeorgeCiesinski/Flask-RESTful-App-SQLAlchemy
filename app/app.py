@@ -5,6 +5,7 @@ from flask_jwt import JWT
 from security import authenticate, identity
 from resources.user import UserRegister
 from resources.item import Item, ItemList
+from resources.store import Store, StoreList
 from db import db
 
 # Create flask app
@@ -18,10 +19,19 @@ app.secret_key = 'george'
 # Create an api for flask_restful
 api = Api(app)
 
+
+# Creates the data.db file before the first request is ran.
+@app.before_first_request
+def create_tables():
+	db.create_all()  # Relies on the model being imported for it to see the model/table
+
+
 jwt = JWT(app, authenticate, identity)
 
 # Add resource to api
+api.add_resource(Store, '/store/<string:name>')
 api.add_resource(Item, '/item/<string:name>')
+api.add_resource(StoreList, '/stores')
 api.add_resource(ItemList, '/items')
 api.add_resource(UserRegister, '/register')
 
