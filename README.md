@@ -4,19 +4,12 @@ This is a basic flask restful app that uses GET, POST, PUT, and DELETE methods.
 
 The data is stored in a SQLite3 database using raw SQL commands.
 
-How to use:
+# Implementation
 
-1. CD into app folder and create the Tables
-
-```
-cd app
-python create_tables.py
-```
-
-2. Run App.py
+1. Run App.py
 
 ```
 python app.py
 ```
 
-3. Use POSTMAN to interact with API.
+2. Use POSTMAN to interact with API as there is no companion front end for this API.
