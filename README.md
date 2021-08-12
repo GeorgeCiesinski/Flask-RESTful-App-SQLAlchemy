@@ -6,7 +6,7 @@ with Store and Item tables. Available commands are GET, POST, PUT, and DELETE.
 # Implementation
 
 1. Clone repository
-2. Create a virtual machine, and use pip to install the requirements
+2. Create a virtual environment, and use pip to install the requirements
 ```
 pip install -r requirements.txt
 ```
